@@ -1,0 +1,73 @@
+body{
+    margin:0;
+    font-family:Arial;
+}
+
+.container{
+    display:flex;
+    height:100vh;
+}
+
+.sidebar{
+    width:30%;
+    background:#f0f2f5;
+    padding:20px;
+}
+
+.contact{
+    background:white;
+    padding:15px;
+    margin-top:10px;
+    cursor:pointer;
+}
+
+.chat-section{
+    width:70%;
+    display:flex;
+    flex-direction:column;
+}
+
+.chat-header{
+    background:#075e54;
+    color:white;
+    padding:20px;
+}
+
+.chat-box{
+    flex:1;
+    background:#ece5dd;
+    padding:20px;
+}
+
+.received{
+    background:white;
+    width:200px;
+    padding:15px;
+    border-radius:10px;
+    margin-bottom:10px;
+}
+
+.sent{
+    background:#dcf8c6;
+    width:200px;
+    padding:15px;
+    border-radius:10px;
+    margin-left:auto;
+}
+
+.message-box{
+    padding:20px;
+    display:flex;
+}
+
+input{
+    flex:1;
+    padding:15px;
+}
+
+button{
+    padding:15px;
+    background:#25d366;
+    color:white;
+    border:none;
+}
