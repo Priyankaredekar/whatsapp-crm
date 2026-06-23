@@ -58,7 +58,7 @@ function loadMessages(sender = "919272518967") {
 
     currentSender = sender;
 
-    document.getElementById("chatHeader").innerText = sender;
+    //document.getElementById("chatHeader").innerText = sender;
 
     fetch(`/messages/${sender}`)
     .then(response => response.json())
