@@ -1,6 +1,7 @@
 body{
     margin:0;
-    font-family:Arial;
+    font-family:Arial, sans-serif;
+    background:#dadbd3;
 }
 
 .container{
@@ -11,14 +12,27 @@ body{
 .sidebar{
     width:30%;
     background:#f0f2f5;
+    border-right:1px solid #ccc;
+    overflow-y:auto;
+}
+
+.sidebar h2{
+    background:#075e54;
+    color:white;
+    margin:0;
     padding:20px;
 }
 
 .contact{
     background:white;
     padding:15px;
-    margin-top:10px;
     cursor:pointer;
+    border-bottom:1px solid #eee;
+    transition:0.3s;
+}
+
+.contact:hover{
+    background:#e9edef;
 }
 
 .chat-section{
@@ -31,43 +45,61 @@ body{
     background:#075e54;
     color:white;
     padding:20px;
+    font-size:18px;
+    font-weight:bold;
 }
 
 .chat-box{
     flex:1;
     background:#ece5dd;
     padding:20px;
+    overflow-y:auto;
 }
 
 .received{
     background:white;
-    width:200px;
+    width:fit-content;
+    max-width:60%;
     padding:15px;
     border-radius:10px;
-    margin-bottom:10px;
+    margin-bottom:15px;
 }
 
 .sent{
     background:#dcf8c6;
-    width:200px;
+    width:fit-content;
+    max-width:60%;
     padding:15px;
     border-radius:10px;
+    margin-bottom:15px;
     margin-left:auto;
 }
 
 .message-box{
-    padding:20px;
+    background:#f0f2f5;
+    padding:15px;
     display:flex;
+    gap:10px;
 }
 
 input{
     flex:1;
     padding:15px;
+    border:none;
+    border-radius:8px;
+    font-size:16px;
 }
 
 button{
-    padding:15px;
     background:#25d366;
     color:white;
     border:none;
+    padding:15px 25px;
+    border-radius:8px;
+    cursor:pointer;
+    font-size:16px;
+}
+
+button:hover{
+    background:#20ba5a;
 }

@@ -58,6 +58,8 @@ function loadMessages(sender = "919272518967") {
 
     currentSender = sender;
 
+    document.getElementById("chatHeader").innerText = sender;
+
     fetch(`/messages/${sender}`)
     .then(response => response.json())
     .then(data => {
@@ -88,6 +90,15 @@ function loadMessages(sender = "919272518967") {
 
         });
 
+        chatBox.scrollTop = chatBox.scrollHeight;
+
     });
 
 }
+
+setInterval(() => {
+
+    loadMessages(currentSender);
+    loadContacts();
+
+}, 3000);
