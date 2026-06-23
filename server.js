@@ -113,6 +113,55 @@ app.get("/webhook", (req, res) => {
 
 });
 
+app.post("/webhook", (req, res) => {
+
+    let body = req.body;
+
+    if (body.object) {
+
+        let entry = body.entry?.[0];
+        let changes = entry?.changes?.[0];
+        let value = changes?.value;
+        let message = value?.messages?.[0];
+
+        if (message) {
+
+            let sender = message.from;
+            let text = message.text?.body;
+
+            console.log("New Message:", sender, text);
+
+            // Save message
+            db.query(
+                "INSERT INTO messages(sender,message,direction) VALUES(?,?,?)",
+                [sender, text, "received"],
+                (err) => {
+
+                    if (err) {
+                        console.log(err);
+                    }
+
+                }
+            );
+
+            // Save contact if not exists
+            db.query(
+                "INSERT IGNORE INTO contacts(phone,name) VALUES(?,?)",
+                [sender, sender]
+            );
+
+        }
+
+        res.sendStatus(200);
+
+    } else {
+
+        res.sendStatus(404);
+
+    }
+
+});
+
 app.listen(3000, () => {
     console.log("Server running on port 3000");
 });
