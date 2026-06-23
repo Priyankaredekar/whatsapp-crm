@@ -1,3 +1,7 @@
+const axios = 
+require("axios");
+require("dotenv").config();
+
 console.log("NEW SERVER FILE RUNNING");
 
 const express = require("express");
@@ -12,29 +16,53 @@ app.get("/", (req, res) => {
     res.sendFile(__dirname + "/public/index.html");
 });
 
-
-// Save Message API
-app.post("/send-message", (req, res) => {
+app.post("/send-message", async (req, res) => {
 
     let message = req.body.message;
+    let sender = req.body.sender;
 
-    db.query(
-        "INSERT INTO messages(sender,message,direction) VALUES(?,?,?)",
-        [req.body.sender, message, "sent"],
-        (err, result) => {
+    try {
 
-            if (err) {
-                console.log(err);
-                res.send("Error");
-            } else {
-                res.send("Message Saved Successfully");
+        await axios.post(
+            `https://graph.facebook.com/v23.0/${process.env.PHONE_NUMBER_ID}/messages`,
+            {
+                messaging_product: "whatsapp",
+                to: sender,
+                text: {
+                    body: message
+                }
+            },
+            {
+                headers: {
+                    Authorization: `Bearer ${process.env.ACCESS_TOKEN}`,
+                    "Content-Type": "application/json"
+                }
             }
+        );
 
-        }
-    );
+        db.query(
+            "INSERT INTO messages(sender,message,direction) VALUES(?,?,?)",
+            [sender, message, "sent"],
+            (err) => {
+
+                if (err) {
+                    console.log(err);
+                    res.send("Error");
+                } else {
+                    res.send("Message Sent Successfully");
+                }
+
+            }
+        );
+
+    } catch (error) {
+
+        console.log(error.response?.data || error);
+        res.send("Failed");
+
+    }
 
 });
-
 
 // Get All Messages API
 app.get("/messages", (req, res) => {
@@ -162,6 +190,8 @@ app.post("/webhook", (req, res) => {
 
 });
 
-app.listen(3000, () => {
-    console.log("Server running on port 3000");
+const PORT = process.env.PORT || 3000;
+
+app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`);
 });
